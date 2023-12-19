@@ -1,8 +1,8 @@
 /* joins: select all the computers from the products table:
 using the products table and the categories table, return the product name and the category name */
- select products.name, categories.name from products inner join categories on products.CategoryId = categories.CategoryId;
+ select products.name, categories.name from products inner join categories on products.CategoryId = categories.CategoryId where categories.Name = 'Computers';
 /* joins: find all product names, product prices, and products ratings that have a rating of 5 */
- select products.name, products.price, reviews.Rating where reviews.Rating = 5;
+ select products.name, products.price, reviews.Rating from products inner join reviews on reviews.ProductID = products.ProductID where reviews.Rating = 5;
 /* joins: find the employee with the most total quantity sold.  use the sum() function and group by */
 select sum(sales.Quantity), employees.FirstName, employees.LastName from employees inner join sales on employees.EmployeeID = sales.EmployeeID group by employees.EmployeeId order by sum(sales.quantity) desc LIMIT 1;
 /* joins: find the name of the department, and the name of the category for Appliances and Games */
@@ -27,12 +27,12 @@ This query should return:
 -  the name of each product
 -  and how many of that product they sod */
 
-select count(sales.SalesId), employees.EmployeeID, employees.FirstName, employees.LastName, products.Name
+select (SELECT COUNT(SalesId) FROM sales WHERE EmployeeId = employees.EmployeeID) as NumberOfSales, (sales.SalesId), employees.EmployeeID, employees.FirstName, employees.LastName, products.Name
 from employees
 inner join sales
 on employees.EmployeeId = sales.EmployeeID
 inner join products
-on sales.ProductId = products.ProductId
-group by products.ProductID, employees.EmployeeID;
+on sales.ProductId = products.ProductId;
 
+select count(sales.SalesId) from sales inner join employees on sales.EmployeeID = employees.EmployeeID where sales.EmployeeID = 33428;
 

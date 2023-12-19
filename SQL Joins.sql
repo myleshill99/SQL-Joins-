@@ -27,12 +27,13 @@ This query should return:
 -  the name of each product
 -  and how many of that product they sod */
 
-select (SELECT COUNT(SalesId) FROM sales WHERE EmployeeId = employees.EmployeeID) as NumberOfSales, (sales.SalesId), employees.EmployeeID, employees.FirstName, employees.LastName, products.Name
+SELECT SUM(sales.Quantity) as NumberOfSales, employees.EmployeeID, employees.FirstName, employees.LastName, products.Name
 from employees
 inner join sales
 on employees.EmployeeId = sales.EmployeeID
 inner join products
-on sales.ProductId = products.ProductId;
+on sales.ProductId = products.ProductId
+GROUP BY employees.EmployeeID, products.Name;
 
 select count(sales.SalesId) from sales inner join employees on sales.EmployeeID = employees.EmployeeID where sales.EmployeeID = 33428;
 
